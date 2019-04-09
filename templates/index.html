@@ -65,9 +65,7 @@
             <label id="locationTitle">{{ location["name"] }}</label><br>
             <label id="locationDescription">{{ location["description"] }}</label><br>
             <label id="locationPhoto"> {{ location["photo_url"] }} </label><br>
-            <label id="locationReview"> {{ location["review"][0]["text"] }}</label><br>
-            <label id="locationReview"> {{ location["review"][0]["author"] }}</label><br>
-            <label id="locationReview"> {{ location["review"][0]["mark"] }}</label><br>
+            <label id="locationReview"> {{ location["review"][0]["author"] }} said {{ location["review"][0]["text"] }} {{ location["review"][0]["mark"] }}</label><br>
         </div>
 
         <image src={{ location["photo_url"] }}> </image>
