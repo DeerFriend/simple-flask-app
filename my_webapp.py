@@ -1,10 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, Markup
 import logging, json
-
 
 flask_app = Flask(__name__)
 
-#CONFIGURING LOGGING
+# CONFIGURING LOGGING
 logger = logging.getLogger('my_logger')
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(message)s')
@@ -20,7 +19,6 @@ fh.setFormatter(formatter)
 logger.addHandler(fh)
 
 
-
 def byteify(input):
     if isinstance(input, dict):
         return {byteify(key): byteify(value)
@@ -32,20 +30,40 @@ def byteify(input):
     else:
         return input
 
-@flask_app.route('/<location_id>')
-def one_location(location_id):
-    # Read hardcoded locations
-    with open('NamLocRev.json') as json_file:
-        full_locations = byteify(json.load(json_file))
-        location_names = []
-        for full_location in full_locations:
-            location_names.append(full_location["name"])
-        print full_locations[int(location_id)]
-        return render_template("index.html", location_names=location_names,location=full_locations[int(location_id)])
 
 @flask_app.route('/')
 def index():
     return redirect("/0")
+
+@flask_app.route('/<location_id>', methods=['POST', 'GET'])
+def one_location(location_id):
+   if request.method == 'POST':
+       with open('NamLocRev.json') as json_file:
+           new_text = request.form.get('new_text')  # loc from client saved onto variable; type: unicode
+           new_text = byteify(new_text)  # type:str
+           new_author = request.form.get('new_author')
+           new_author = byteify(new_author)
+           json_data = json.load(json_file)
+           current_dict = json_data[int(location_id)]  # list
+           entry = {"text": new_text, "author": new_author}
+           print("entry "+str(entry))
+           current_dict["review"].append(entry)
+           print("current_dict " + str(current_dict))
+           with open('NamLocRev.json', 'w') as file:
+               file.write(json.dumps(json_data))
+           return redirect("/" + location_id)
+   else:
+       # Read hardcoded locations
+       with open('NamLocRev.json') as json_file:
+           full_locations = byteify(json.load(json_file))
+           location_names = []
+           for full_location in full_locations:
+               location_names.append(full_location["name"])
+           print full_locations[int(location_id)]
+           return render_template("index.html", location_names=location_names,location=full_locations[int(location_id)])
+
+
+
 
 @flask_app.route('/add-location', methods=['POST', 'GET'])
 def add_location():
@@ -64,15 +82,9 @@ def add_location():
 
 
 
-
-
-
-
 @flask_app.route('/about')
 def about_page():
     return render_template("about.html")
-
-
 
 
 logger.info('STARTING APP, TRY IT OUT!!!')
