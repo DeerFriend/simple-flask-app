@@ -32,3 +32,7 @@ option {
     color: red;
     font-weight: bold;
 }
+
+#text {
+    font-style: italic;
+}

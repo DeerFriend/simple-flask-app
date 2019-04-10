@@ -79,12 +79,10 @@
         <div class="row-md-4">
             <ul>
                 {% for review in location["review"] %}
-                <li id="authorName"> <span id="author">{{ review["author"] }}</span> says: {{ review["text"] }}</li>
+                <li id="authorName"> <span id="author">{{ review["author"] }}</span> says: "<span id="text">{{ review["text"] }}</span>"</li>
                 <br><br>
                 {% endfor %}
             </ul>
-
-
 
 
 
@@ -95,7 +93,7 @@
                          <br>
                 <button type="submit" class="btn btn-warning btn-block" name="add-review">Add Review</button>
 
-                 </div>
+            </div>
 
             </form>
 
