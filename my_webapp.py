@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import logging, json
 
+
 flask_app = Flask(__name__)
 
 #CONFIGURING LOGGING
@@ -60,6 +61,8 @@ def add_location():
             return redirect("/"+str(len(json_data)-1))
     else:
         return render_template("add-location.html")
+
+
 
 
 
