@@ -16,6 +16,10 @@ option {
     height: 2em;
 }
 
+.container img {
+    max-width:100%;
+}
+
 .navbar{
     background-color: #14213D;
     text-align: center;
@@ -24,3 +28,7 @@ option {
     opacity: 50%;
 }
 
+#author {
+    color: red;
+    font-weight: bold;
+}

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import logging, json
 
+
 flask_app = Flask(__name__)
 
 #CONFIGURING LOGGING
@@ -61,6 +62,13 @@ def add_location():
     else:
         return render_template("add-location.html")
 
+
+def inject_template_vars():
+    output = {}
+    output["baseurl"] = get_baseurl()
+    current_path = str(request.url_rule)[1:].split("/")
+    output["current_path"] = current_path[0]
+    return output
 
 
 

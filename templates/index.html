@@ -24,12 +24,20 @@
     function redirection(){
         const selector = document.getElementById("locationSelect");
         const newIndex = selector.selectedIndex;
-        window.location.href = "/"+newIndex;
+        window.location.href = "/" + newIndex;
     }
+
 </script>
 
 <div class="row">
+
     <div class="col-md-6">
+
+        <div class="row-md-4">
+        <label>{{ location["name"] }}</label><br>
+        <label>{{ location["description"] }}</label><br><br><br>
+        </div>
+        <div class="row-md-8">
         <iframe
                 id="map"
                 width="540"
@@ -39,11 +47,14 @@
                 src=""
                 allowfullscreen
         ></iframe>
-
+</div>
     </div>
 
     <div class="col-md-6">
+
+
         <div class="row-md-4">
+            <br><br>
             <div class="form-group">
                 <a class="btn btn-warning pull-right" rel="noopener noreferrer" href="add-location" role="button">Add a
                     new location</a>
@@ -57,36 +68,52 @@
                 </select>
             </div>
         </div>
-        <div class="row-md-1 line_container">
-            <div class="line"></div>
-        </div>
-        <div class="row-md-7">
+
+
+        <div class="row-md-4">
             <br><br>
-            <label id="locationTitle">{{ location["name"] }}</label><br>
-            <label id="locationDescription">{{ location["description"] }}</label><br>
-            <label id="locationPhoto">photo</label><br>
-            <label id="locationReview">photo</label><br>
+            <img src="{{ location["photo_url"] }}"><br>
         </div>
 
-        <div class="row">
-            <div class="column-8 column-sm-6">
 
-            </div>
-            <div class="column-4 column-sm-6">
+        <div class="row-md-4">
+            <ul>
+                {% for review in location["review"] %}
+                <li id="authorName"> <span id="author">{{ review["author"] }}</span> says: {{ review["text"] }}</li>
+                <br><br>
+                {% endfor %}
+            </ul>
 
-            </div>
 
+
+
+
+            <form method="POST" action="">
+            <div class="form-group">
+                <input type="text" id="new_text" name="new_text" class="form-control input-lg" placeholder="Write your review" required="">
+                <input type="text" id="new_author" name="new_author" class="form-control" placeholder="Name" required="">
+                         <br>
+                <button type="submit" class="btn btn-warning btn-block" name="add-review">Add Review</button>
+
+                 </div>
+
+            </form>
 
         </div>
+
 
     </div>
-    <script type="text/javascript">
+
+</div>
+
+<script type="text/javascript">
         loadMap();
         var selector = document.getElementById("locationSelect");
         var url = window.location.href ;
         var index = url.substr(url.lastIndexOf('/') + 1);
         selector.selectedIndex = index ;
 
-    </script>
 
-    {% endblock %}
+</script>
+
+{% endblock %}
