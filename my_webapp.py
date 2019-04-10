@@ -63,12 +63,7 @@ def add_location():
         return render_template("add-location.html")
 
 
-def inject_template_vars():
-    output = {}
-    output["baseurl"] = get_baseurl()
-    current_path = str(request.url_rule)[1:].split("/")
-    output["current_path"] = current_path[0]
-    return output
+
 
 
 
