@@ -64,9 +64,13 @@
             <br><br>
             <label id="locationTitle">{{ location["name"] }}</label><br>
             <label id="locationDescription">{{ location["description"] }}</label><br>
-            <label id="locationPhoto">photo</label><br>
-            <label id="locationReview">photo</label><br>
+            <label id="locationPhoto"> {{ location["photo_url"] }} </label><br>
+            <label id="locationReview"> <!-- need to add a loop to see all reviews !--> {{ location["review"][0]["author"] }} said {{ location["review"][0]["text"] }} {{ location["review"][0]["mark"] }}</label><br>
+
         </div>
+
+        <image src={{ location["photo_url"] }}> </image>
+
 
         <div class="row">
             <div class="column-8 column-sm-6">
